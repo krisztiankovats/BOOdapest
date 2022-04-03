@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Add custom markers in Mapbox GL JS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link
+            href="https://fonts.googleapis.com/css?family=Open+Sans"
+            rel="stylesheet"
+    />
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js"></script>
+    <link
+            href="https://api.tiles.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css"
+            rel="stylesheet"
+    />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .marker {
+            background-image: url("https://cdn.glitch.global/cc468a98-604c-42ea-9ab5-a60318df0cd8/pngfind.com-ghostbusters-png-1156537.png?v=1648577947685");
+            background-size: cover;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .mapboxgl-popup {
+            max-width: 200px;
+        }
+
+        .mapboxgl-popup-content {
+            text-align: center;
+            font-family: "Open Sans", sans-serif;
+        }
+
+        img {
+            height: 100%;
+            width: 100%;
+            justify-self: center;
+            position: center;
+        }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+
+<script>
+    mapboxgl.accessToken =
+        "pk.eyJ1Ijoia3Jpc3p0aWFua292YXRzOTQiLCJhIjoiY2wxY2V2aml2MDZ5dTNqbWZwNzZvNXd0ZSJ9.Jmub6LsGY1Jn6MsonUmIqA";
+
+    const map = new mapboxgl.Map({
+        container: "map",
+        style: "mapbox://styles/krisztiankovats94/cl1cf9ong001015o4ejnf4s58",
+        center: [19.0402, 47.4979],
+        zoom: 12,
+    });
+
+    const geojson = {
+        type: "FeatureCollection",
+        features: [
+            {
+                type: "Feature",
+                geometry: {
+                    type: "Point",
+                    coordinates: [19.089790, 47.553660],
+                },
+                properties: {
+                    title: "Bratislava street housing estate",
+                    image: "https://ujpestmedia.hu/wp-content/uploads/2020/11/Pozsonyi-%C3%BAti-lak%C3%B3telep-1200x600.jpg",
+                    description: "Újpest sokáig önálló városként létezett, és csak az ’50-es években csatolták Budapesthez. A ’60-as évek végén a városrész több felújításon, átalakításon esett keresztül. Ugyanebben az időszakban a város növekedésével, terjeszkedésével, alakulásával több temetőt, sírkertet is felszámoltak, a halottakat új nyughelyeken helyezték el. Ennek a felszámolásnak esett áldozatául a Magdolnavárosi sírkert is – a temető bezárása után csak kicsit kell ugranunk a történelemben, és ugyenezen a helyen felépül az azóta legendássá vált Pozsonyi utcai lakótelep közel 17 ezer lakása.\n" +
+                        "\n" +
+                        "A beköltöző lakók azonban gyanús zajokat, furcsa neszeket véltek hallani éjszakánként, és gyorsan elterjedt közöttük a szóbeszéd, hogy a megbolygatott temető halottjai kísértik az újonnan épült paneltömböket. Egyes elbeszélések szerint a pánik néhányak számára nagyon is valós volt, voltak, akik tényleg őszintén hitték, hogy elátkozott épületbe költöztek, de persze voltak józanabbul gondolkodók, akik úgy vélték, egy új épület természetes mozgása is járhat mindenféle zajjal – nem beszélve arról, hogy aki az egész életét egy 80 centis falakkal szigetelt belvárosi lakásban töltötte, majd hirtelen egy, akkoriban újdonságnak számító panelba költözött, annak valóban szokatlanok lehettek a mindennapok zajai.\n" +
+                        "\n" +
+                        "A pánik mára elcsitult a lakótelep körül, de még mindig vannak, akik számon tartják a különös eseményeket, sőt a téma iránt érdeklődők közül néhányan még ma is kifejezetten a szellemek miatt keresik fel az újpesti lakótelepet."
+                        + "\n" + " - bien.hu"
+                },
+            },
+            {
+                type: "Feature",
+                geometry: {
+                    type: "Point",
+                    coordinates: [19.058740, 47.502420],
+                },
+                properties: {
+                    title: "Hungarian State Opera",
+                    image: "https://www.bien.hu/wp-content/uploads/2018/03/kisertetjarta-helyek-ismered-budapest-szellemeit.webp",
+                    description: "Állítólag az Operaház színpada mögötti sötétben időnként fel-fel izzik egy vörös szempár, de olyanok is vannak, akik a párnázott székeken látnak ugrándozni egy macskát az előadások között. Akik hisznek benne, úgy tartják, hogy a szellem egy Vera nevű macskához tartozik, akinek gazdája valaha az Operaház művésze volt." +
+                        "\n" +
+                        "Bár én személy szerint nem hiszek a szellemekben, most mégis megpróbálom megindokolni, mit kísértene egy macska az Operában: vannak, akik úgy gondolják, hogy a velünk szoros kapcsolatban álló társállatok szelleme a túlvilágon csatlakozik a mi szellemünkhöz, vagyis, ahogy rokonainkkal, úgy kedvenc kisállatainkkal is találkozunk az árnyékvilágban." +
+                        "\n" +
+                        "Ha Vera gazdája az Operaházban énekelt, és számára ez egy fontos, örömteli hely volt, akkor – a szellemhívők logikáját követve – nem meglepő, hogy itt akart maradni, hűséges cicája pedig ide is követte őt." +
+                        "\n" +
+                        " - bien.hu"
+                },
+            },
+            {
+                type: "Feature",
+                geometry: {
+                    type: "Point",
+                    coordinates: [18.970390, 47.501900],
+                },
+                properties: {
+                    title: "Ghost of Svábhegy",
+                    image: "https://www.bien.hu/wp-content/uploads/2018/03/kisertetjarta-helyek-ismered-budapest-szellemeit-1.webp",
+                    description: "A Svábhegyen kirándulni kellemes hétvégi program, ám a gyönyörű villák és bauhaus épületek sajnos a történelem sötét korának is szemtanúi voltak. A II. világháborúban a német csapatok egyetlen éjszaka alatt szállták meg és ürítették ki a vidéket, a lakóknak azt sem engedték meg, hogy összecsomagoljanak. A Majestic szállóban Adolf Eichmann rendezkedett be, aki innen, a város fölül szervezte meg a magyar zsidóság deportálását." +
+                        "\n" +
+                        "Az épületek egykori fáskamráiban vallatókat, szabályos kínzókamrákat rendeztek be, a háború után pedig az Állambiztonság vett birtokba svábhegyi ingatlanokat, hasonlóan alantas célokra. Volt olyan épület, amelynek az aljában mulatót rendeztek be, hogy ne tűnjön fel a nagy járkálás, és persze a sokszor félájult embereket is kevésbé feltűnően lehessen az épületből be és ki mozgatni…" +
+                        "\n" +
+                        "A felfoghatatlan tragédiák nyomán érthető, ha sokan úgy vélik, a Svábhegyen több szellem is kísért. Közülük különösen ismert egy egykori zsidó család szelleme, akik mindenüket pénzzé téve próbálták megvásárolni az életben maradásukat, mindhiába: a tisztek a pénzt és a családi kincseket elvették, de a család tagjai nem kerültek le a deportálásra várók listájáról." +
+                        "\n" +
+                        " - bien.hu"
+                },
+            },
+            {
+                type: "Feature",
+                geometry: {
+                    type: "Point",
+                    coordinates: [19.0514682, 47.5126192],
+                },
+                properties: {
+                    title: "The Comedy Theatre of Budapest ",
+                    image: "https://m.blog.hu/bp/bpromantikaja/image/kisertet1.jpg",
+                    description: "Állítólag az akkori színházi takarító és az éjjeli őr is többször találkozott egy zöld szemű kísértettel a színház falai között, sőt a színház alagsorában a különböző emelőszerkezetek között éjszakánként különös hangokat, csapódásokat lehetett hallani. Az 1896-ban átadott épület bár akkor még elég új volt ahhoz, hogy kísértetek tanyázzanak benne, a budapesti közönség olyannyira fellelkesült a hírek hallatán, hogy az újságírók megpróbáltak utánajárni a kísértetnek. A találgatásoknak végül Harsányi Zsolt igazgató vetett véget, aki a borzongató történetet felhasználta egy kis reklámkampányra. Megerősítette, hogy valóban járnak kísértetek a Vígszínházban, de azok inkább a színpadon tartózkodnak: egyrészt a tragikus fiatalon elhunyt pártoló Keglevich grófra figyelmeztetett, akiről azokban az években minden előadás előtt megemlékeztek, másrészt Jókai Mórra, aki abban az időben a legtöbb darabot adta a színháznak, ezzel felidézve a magyar szellemi örökséget. Arról nem szól a fáma, hogy a Vígszínház szellemével mi lett, az azóta eltelt több, mint 120 évben számtalan tragikus történetnek lehettek szemtanúi a falak, így akár több kísértet is visszajárhatna, de napjainkban nem igen hallunk erről."
+                        + "\n" + " - https://bpromantikaja.blog.hu/"
+                },
+            },
+        ],
+    };
+
+    // add markers to map
+    for (const feature of geojson.features) {
+        // create a HTML element for each feature
+        const el = document.createElement("div");
+        el.className = "marker";
+
+        // make a marker for each feature and add to the map
+        new mapboxgl.Marker(el)
+            .setLngLat(feature.geometry.coordinates)
+            .setPopup(new mapboxgl.Popup({offset: 25})
+                .setHTML(`<h3>${feature.properties.title}</h3>
+<p><img src="${feature.properties.image}" alt="'An Image of marker.properties.title'"></p>
+<p>${feature.properties.description}</p>`
+                )
+            )
+            .addTo(map);
+    }
+</script>
+</body>
+</html>
